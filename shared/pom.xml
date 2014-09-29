@@ -5,4 +5,13 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>Shared api's</name>
   <description>contains api's which are used by multiple classes</description>
+  
+  
+  <dependencies>
+   <dependency>
+     <groupId>com.google.protobuf</groupId>
+     <artifactId>protobuf-java</artifactId>
+     <version>2.6.0</version>
+   </dependency>
+ </dependencies>
 </project>

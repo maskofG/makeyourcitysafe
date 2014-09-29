@@ -1,0 +1,91 @@
+
+
+enum CrimeType
+{
+   EVE_TEASING=1;
+   ACCIDENT=2;
+   BRIBING=3;
+   MURDER=4;
+   ROBBERY=5;
+   PICK_POCKETING=6;
+   SEXUAL_HARRASMENT=7;
+   RAPE=8;
+   DOMESTIC_VIOLENCE=9;
+   KIDNAPPING=10;
+   RIOT=11;
+   NUISANCES=12;
+   HUMAN_TRAFFICING=13;
+   OTHER=14;
+}
+
+
+enum ActionSet
+{
+   POLICE=1;
+   AMBULANCE=2;
+   NEWS_CHANNEL=3;
+   AAM_AADMI=4;
+   NGO=5;
+   DOCTORS=6;
+}
+
+
+enum CrimeDataConsumers
+{
+	INDUSTRIAL_CONSUMER=101;
+	VIEWER=102;
+	CRIME_RESOLVER=103;
+	CRIME_REPORTER=104;
+}
+
+
+enum CrimeResolutionPriority
+{
+	VERY_HIGH=1;//Action within an hour
+	HIGH=2;//within a day
+	MEDIUM=3;//within 2-3 days
+	LOW=4;//within a week
+	VERY_LOW=5;//within a month
+	DONOT_CARE_ABOUT_TIME=6;
+}
+
+message Address
+{
+   optional string streetNo=101;
+   optional string area=102;
+   optional string landmark=103;
+   optional string city=104 [default = "Bangalore"];
+   optional string state=105 [default = "karnataka"];
+   optional string country=106 [default = "India"];
+}
+
+message CrimeLocation
+{
+	required string lat=101;
+	required string log=102;
+    optional Address address=103;
+}
+
+
+message CrimeTime
+{
+	required string epoch=101;
+	required string timezone=102;
+}
+
+message DefaultCrimeData
+{
+	required string requestedId=101;
+	required CrimeType type=102;
+	required CrimeLocation location=103;
+	required CrimeTime reportingTime=104;
+}
+
+message CrimeData
+{
+  extend DefaultCrimeData {
+  		repeated ActionSet actionset=201;
+	    required CrimeResolutionPriority crime_priority=202;
+  }
+
+}

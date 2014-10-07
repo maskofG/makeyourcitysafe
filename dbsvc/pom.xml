@@ -3,23 +3,79 @@
   <groupId>com.socialnetwork.reportcrime</groupId>
   <artifactId>dbsvc</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
   <name>database service</name>
   <description>database service for storing crime related data</description>
-  
+  <properties>
+      <protoc.version>2.5.0</protoc.version>
+      <maven.jar.plugin.version>2.5</maven.jar.plugin.version>
+  </properties>
+  <dependencies>
+     <dependency>
+	 <groupId>com.google.protobuf</groupId>
+	 <artifactId>protobuf-java</artifactId>
+	 <version>${protoc.version}</version>
+     </dependency>
+  </dependencies>
   <build>
       <directory>${basedir}/build</directory>
-      <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
       <outputDirectory>${project.build.directory}/classes</outputDirectory>
-      <testSourceDirectory>${basedir}/src/main/test</testSourceDirectory>'
+      <testSourceDirectory>${basedir}/src/main/test</testSourceDirectory>
       <testOutputDirectory>${project.build.directory}/test-classes</testOutputDirectory>
       <plugins>
+          
+           <!-- jar plugin -->
           <plugin>
-              <dependency>
-			  <groupId>com.google.protobuf</groupId>
-	          <artifactId>protobuf-java</artifactId>
-	          <version>2.5.0</version>
-              </dependency>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>${maven.jar.plugin.version}</version>
           </plugin>
+          
+           <!-- google protocol buffer plugin -->
+           <plugin>
+		       <artifactId>maven-antrun-plugin</artifactId>
+		       <executions>
+		         <execution>
+		           <id>generate-sources</id>
+		           <phase>generate-sources</phase>
+		           <configuration>
+		             <tasks>
+		               <!--  <mkdir dir="target/generated-sources"/> -->
+		               <exec executable="protoc">
+		                 <arg value="--java_out=src/main/generated"/>
+		                 <arg>${basedir}/src/main/protobuf/*.proto</arg>
+		               </exec>
+		             </tasks>
+		             <sourceRoot>${basedir}/src/main/protobuf</sourceRoot>
+		           </configuration>
+		           <goals>
+		             <goal>run</goal>
+		           </goals>
+		         </execution>
+		       </executions>
+           </plugin>
+           
+           <!-- maven build helper -->
+           <plugin>
+		        <groupId>org.codehaus.mojo</groupId>
+		        <artifactId>build-helper-maven-plugin</artifactId>
+		        <version>1.7</version>
+		        <executions>
+		          <execution>
+		            <id>add-source</id>
+		            <phase>generate-sources</phase>
+		            <goals>
+		              <goal>add-source</goal>
+		            </goals>
+		            <configuration>
+		              <sources>
+		                <source>${basedir}/src/main/java</source>
+		                <source>${basedir}/src/main/generated</source>
+		              </sources>
+		            </configuration>
+		          </execution>
+		        </executions>
+             </plugin>
       </plugins>
   </build>
 </project>

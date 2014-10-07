@@ -1,0 +1,19 @@
+package com.socialnetwork.reportcrime.dbsvc.messageschema;
+
+enum ApiType
+{
+	DATA_BASE_API=1;
+}
+
+
+message Request
+{
+	required string requestId=1;
+	required ApiType apitype=2;
+}
+
+
+message Response
+{
+	required string requestId=1;
+}

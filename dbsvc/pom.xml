@@ -22,6 +22,7 @@
       <outputDirectory>${project.build.directory}/classes</outputDirectory>
       <testSourceDirectory>${basedir}/src/main/test</testSourceDirectory>
       <testOutputDirectory>${project.build.directory}/test-classes</testOutputDirectory>
+      <pluginManagement>
       <plugins>
           
            <!-- jar plugin -->
@@ -77,5 +78,6 @@
 		        </executions>
              </plugin>
       </plugins>
+      </pluginManagement>
   </build>
 </project>

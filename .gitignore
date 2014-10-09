@@ -1,0 +1,4 @@
+.metadata/*
+dbsvc/target/
+dbsvc/build/
+dbsvc/src/main/generated
